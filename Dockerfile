@@ -1,13 +1,4 @@
-# Stage 1: Build
-FROM node:18-alpine as builder
-WORKDIR /app
-COPY . .
-RUN npm install && npm run build
-
-# Stage 2: Nginx
 FROM nginx:alpine
-COPY --from=builder /app/dist /usr/share/nginx/html
 COPY nginx.conf /etc/nginx/nginx.conf
-
-EXPOSE 80
+EXPOSE 8080
 CMD ["nginx", "-g", "daemon off;"]
